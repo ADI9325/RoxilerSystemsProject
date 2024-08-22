@@ -1,0 +1,214 @@
+API Documentation for Transactions Service
+
+Base URL
+http://localhost:5000/api/transactions
+
+Endpoints
+
+1. Initialize Database
+Endpoint: GET /initialize-db
+
+Description:
+This endpoint fetches seed data from a remote source and initializes the database by clearing any existing data and inserting new data.
+
+Response:
+200 OK
+Body:
+{
+    "message": "Database initialized with seed data"
+}
+500 Internal Server Error
+Body:
+{
+    "error": "Failed to initialize database. Please try again later."
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+2. List Transactions
+Endpoint: GET /
+
+Description:
+Retrieves a paginated list of transactions filtered by month and an optional search term. The search can be performed on the title, description, or price.
+
+Query Parameters:
+- month (string, required): The name of the month (e.g., "January").
+- search (string, optional): A search term to filter transactions by title, description, or price.
+- page (integer, optional): The page number for pagination (default: 1).
+- perPage (integer, optional): The number of items per page (default: 10).
+
+Response:
+200 OK
+Body:
+[
+    {...transaction}
+]
+400 Bad Request
+Body:
+{
+    "error": "Invalid page number. Page number must be a positive integer."
+}
+Body:
+{
+    "error": "Invalid perPage value. Items per page must be a positive integer."
+}
+Body:
+{
+    "error": "Invalid month. Please provide a valid month name."
+}
+404 Not Found
+Body:
+{
+    "error": "No transactions found for the given criteria."
+}
+500 Internal Server Error
+Body:
+{
+    "error": "Failed to list transactions. Please try again later."
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3. Get Statistics
+Endpoint: GET /statistics
+
+Description:
+Retrieves aggregated statistics for a specific month, including total sales amount, total items sold, and total items not sold.
+
+Query Parameters:
+- month (string, required): The name of the month (e.g., "January").
+
+Response:
+200 OK
+Body:
+{
+    "totalAmount": number,
+    "totalItems": number,
+    "totalNotSold": number
+}
+400 Bad Request
+Body:
+{
+    "error": "Invalid month parameter. Please provide a valid month name."
+}
+500 Internal Server Error
+Body:
+{
+    "error": "Failed to retrieve statistics. Please try again later."
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Get Bar Chart Data
+Endpoint: GET /bar-chart
+
+Description:
+Retrieves data for a bar chart that categorizes the number of transactions based on price ranges for a specific month.
+
+Query Parameters:
+- month (string, required): The name of the month (e.g., "January").
+
+Response:
+200 OK
+Body:
+[
+    {
+        "range": "0 - 100",
+        "count": number
+    },
+    ...
+]
+400 Bad Request
+Body:
+{
+    "error": "Invalid month parameter. Please provide a valid month name."
+}
+500 Internal Server Error
+Body:
+{
+    "error": "Failed to retrieve bar chart data. Please try again later."
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+5. Get Pie Chart Data
+Endpoint: GET /pie-chart
+
+Description:
+Retrieves data for a pie chart that shows the distribution of transactions by category for a specific month.
+
+Query Parameters:
+- month (string, required): The name of the month (e.g., "January").
+
+Response:
+200 OK
+Body:
+[
+    {
+        "category": string,
+        "count": number
+    },
+    ...
+]
+400 Bad Request
+Body:
+{
+    "error": "Invalid month parameter. Please provide a valid month name."
+}
+500 Internal Server Error
+Body:
+{
+    "error": "Failed to retrieve pie chart data. Please try again later."
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+6. Get Combined Data
+Endpoint: GET /api/combined-data
+
+Description:
+Fetches combined data for a specific month, including statistics, bar chart data, and pie chart data.
+
+Query Parameters:
+- month (string, required): The name of the month (e.g., "January").
+
+Response:
+200 OK
+Body:
+{
+    "statistics": {
+        "totalAmount": number,
+        "totalItems": number,
+        "totalNotSold": number
+    },
+    "barChartData": [
+        {
+            "range": "0 - 100",
+            "count": number
+        },
+        ...
+    ],
+    "pieChartData": [
+        {
+            "category": string,
+            "count": number
+        },
+        ...
+    ]
+}
+400 Bad Request
+Body:
+{
+    "error": "Invalid month parameter. Please provide a valid month name."
+}
+500 Internal Server Error
+Body:
+{
+    "error": "Failed to fetch combined data. Please try again later."
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+This documentation provides detailed information on each API endpoint, including their purpose, the parameters they accept, and the possible responses. It should serve as a comprehensive guide for developers working with the Transactions API.
