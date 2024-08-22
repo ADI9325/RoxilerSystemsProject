@@ -1,7 +1,7 @@
 const axios = require('axios');
 const moment = require('moment'); // for easier date manipulation
 
-const baseUrl = 'http://localhost:5000/api/transactions'; // Base URL for your API
+const baseUrl = 'http://localhost:5001/api/transactions'; // Base URL for your API
 
 const getCombinedData = async (req, res) => {
     try {

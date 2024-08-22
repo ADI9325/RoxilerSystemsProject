@@ -12,7 +12,7 @@ router.get('/statistics', getStatistics);
 router.get('/bar-chart', getBarChartData);
 router.get('/pie-chart', getPieChartData);
 
-router.get('/api/combined-data', getCombinedData);
+router.get('/combined-data', getCombinedData);
 
 
 module.exports = router;
